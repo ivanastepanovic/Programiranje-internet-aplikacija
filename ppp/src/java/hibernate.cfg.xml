@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/projekat?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+    <mapping class="entity.Korisnik"/>
+    <mapping class="entity.Rezervacijakarata"/>
+    <mapping class="entity.Prevoznik"/>
+    <mapping class="entity.Stanica"/>
+    <mapping class="entity.Autobus"/>
+    <mapping class="entity.Vozac"/>
+    <mapping class="entity.Mesecnakarta"/>
+    <mapping class="entity.Gradskalin"/>
+    <mapping class="entity.Linija"/>
+    <mapping class="entity.Medjugradskalin"/>
+    <mapping class="entity.NajskorijeMedjugradske"/>
+    <mapping class="entity.Slike"/>
+    <mapping class="entity.Otkazane"/>
+    <mapping class="entity.Mesecnagodisnja"/>
+  </session-factory>
+</hibernate-configuration>

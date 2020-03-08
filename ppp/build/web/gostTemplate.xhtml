@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>Autobuski prevoz</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" href="resources/css/myStyle.css"/>
+        
+    </h:head>
+    <h:body>
+        <div class="header">
+        <ui:insert name = "header" >
+           <h:form>
+                <p:menubar style="margin-left: 2%; margin-right: 2%; ">
+                <p:menuitem value="Pretraga međugradskih linija" url="gost.xhtml"/>
+                <p:menuitem value="Prikaz najskorijih linija" url="gostNajskorijiPolasci.xhtml"/>   
+                <p:menuitem value="Početna" url="#{korisnik.logout()}"/>
+            </p:menubar>
+            </h:form>
+        </ui:insert> 
+        </div>
+        <br/>
+        <div class="content">
+           <ui:insert name = "content" >
+              Main content
+        </ui:insert>
+        </div>
+    <br/>
+   
+        <div class="footer">
+        <ui:insert name = "footer" >
+             Ivana Stepanovic
+        </ui:insert>
+        </div>
+    </h:body>
+</html>

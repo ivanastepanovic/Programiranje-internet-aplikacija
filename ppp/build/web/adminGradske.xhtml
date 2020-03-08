@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="adminTemplate.xhtml">
+        <ui:define name="content">
+        
+        <h:form>
+            <p:commandButton value="Uneti novog vozača u bazu"
+                             type="button" onclick="PF('dialogVozac').show();">                
+            </p:commandButton>
+            <p:commandButton value="Otkažite liniju"
+                             type="button" onclick="PF('dialogOtkazi').show();">           
+            </p:commandButton>
+            <p:commandButton value="Uneti novu liniju u bazu"
+                             type="button" onclick="PF('dialogLinija').show();"> 
+            </p:commandButton>
+  
+            <p:dialog header="Uneti podatke o vozaču" widgetVar="dialogVozac" minHeight="40">
+                <p:panelGrid columns="2" id="unosVozaca">
+                    <h:outputText value='Ime:' />
+                    <p:inputText value='#{adminGrad.ime}' />
+                    
+                    <h:outputText value='Prezime:' />
+                    <p:inputText value="#{adminGrad.prezime}"/>
+                    
+                    <h:outputText value='Datum rođenja: (yyyy-MM-dd)' />
+                    <p:inputText value="#{adminGrad.datumRodjenja}" >
+                        <f:convertDateTime pattern="yyyy-MM-dd"/>  
+                    </p:inputText>           
+                    <h:outputText value='Godina početka:' />
+                    <p:inputText value="#{adminGrad.godinaPocetka}" />
+                
+                    <p:commandButton value="Potvrdi" id="button">
+                        <f:ajax render="unosVozaca" event="click" execute="button"
+                                listener="#{adminGrad.showGrowl()}"  />
+                    </p:commandButton>
+                    <p:growl id="growl" showDetail="true" sticky="true"/>
+                </p:panelGrid>
+            </p:dialog>
+
+            
+            <p:dialog header="Uneti podatke o liniji koju treba otkazati" widgetVar="dialogOtkazi" minHeight="40">
+                <p:panelGrid columns="2" id="otkazLinije">
+                <h:outputText value="Odabrati liniju koju treba otkazati: " />
+                <p:selectOneMenu value='#{adminGrad.gradskaOtkaz}' >
+                    <f:selectItems value="#{adminGrad.gradskeZaOtkazivanje()}" />
+                </p:selectOneMenu>
+                
+                <h:outputText value="Datum pocetka izmene:" />
+                <p:calendar mindate="#{adminGrad.danas()}" value="#{adminGrad.datumOd}" />
+                <h:outputText value="Datum kraja izmene:" />    
+                <p:calendar mindate="#{adminGrad.danas()}" value="#{adminGrad.datumDo}" />
+                    
+                <p:commandButton value="Potvrdi" id="otkazi" ajax="true">
+                    <f:ajax render="otkazLinije" event="click" execute="otkazLinije"
+                            listener="#{adminGrad.showGrowl3()}"  />
+                </p:commandButton>
+                <p:growl id="growl3" showDetail="true" sticky="true"/>
+                
+                </p:panelGrid>
+            </p:dialog>   
+            
+            
+            <p:dialog header="Uneti podatke o liniji:" widgetVar="dialogLinija" minHeight="40">
+            <p:panelGrid columns="2" id="unosLinije">
+                    <h:outputText value='Broj linije:' />
+                    <p:inputText value='#{adminGrad.brojLinije}' />
+                    
+                    <h:outputText value='Polazište:' />
+                    <p:selectOneMenu value="#{adminGrad.polaziste}" >
+                        <f:selectItems value="#{adminGrad.spisakStanica()}" />
+                    </p:selectOneMenu>
+                    
+                    <h:outputText value='Odredište:' />
+                    <p:selectOneMenu value="#{adminGrad.odrediste}" >
+                        <f:selectItems value="#{adminGrad.spisakStanica()}" />
+                    </p:selectOneMenu>
+                    
+                    <h:outputText value='Medjustanice:' />
+                    <p:selectManyMenu value="#{adminGrad.medjustanice}" >
+                        <f:selectItems value="#{adminGrad.spisakStanica()}" />                       
+                    </p:selectManyMenu>                    
+                    <h:outputText value='Red vožnje:' />
+                    <p:fileUpload fileUploadListener="#{adminGrad.upload}"/>
+                
+                    
+                    
+                    <h:outputText value='Vozači:' />
+                    <p:selectManyMenu value="#{adminGrad.vozaci}" >
+                        <f:selectItems value="#{adminGrad.spisakVozaca()}" />                       
+                    </p:selectManyMenu>
+                    
+                    <p:commandButton value="Potvrdi" id="btn">
+                        <f:ajax render="unosLinije" event="click" execute="btn"
+                                listener="#{adminGrad.showGrowl2()}" />
+                    </p:commandButton>
+                    <p:growl id="growl2" showDetail="true" sticky="true"/>
+                    </p:panelGrid>
+            
+            </p:dialog>
+        </h:form>
+            
+            
+               
+         
+         
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

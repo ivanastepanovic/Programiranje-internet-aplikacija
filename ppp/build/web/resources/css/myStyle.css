@@ -1,0 +1,26 @@
+body {
+    background-color: rgb(255, 255, 230);
+    background-repeat: no-repeat;
+    background-size: cover;   
+}
+
+
+.header{
+    background-color: rgb(255, 255, 230);
+    height: 50px;
+}
+
+.footer{
+    opacity: 0.5;
+    background-color: rgb(255, 255, 230);
+    height: 50px;
+}
+
+.content{
+    
+}
+
+.prosla {
+    background-color: rgb(199, 247, 123);
+}
+

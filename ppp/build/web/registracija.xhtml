@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"    
+      xmlns:o="http://omnifaces.org/ui"  
+          
+      xmlns:p="http://primefaces.org/ui">
+         
+    <h:head>
+        <title>#{por.naslovProzora}</title>
+        <link rel="stylesheet" type="text/css" href="resources/css/myStyle.css"/>
+    </h:head>
+    
+    <h:body>     
+        <ui:composition template="myTemplate.xhtml">
+        <ui:define name="content">
+            
+            <h:form style="padding-left: 400px;;
+                    padding-right: 400px;"
+                    id="formaRegistracija">
+                
+                <h3> #{por.regPoruka} <br/><br/> </h3>
+           
+                <h:panelGrid columns="2" >
+                #{por.ime}
+                <p:inputText value="#{korisnik.ime}" id="ime" required="true"
+                             requiredMessage="Unos imena je obavezan!">
+                </p:inputText>
+                  
+                #{por.prezime} 
+                <p:inputText value="#{korisnik.prezime}" id="prezime" required="true"
+                             requiredMessage="Unos prezimena je obavezan!"/>
+              
+                #{por.username} 
+                <p:inputText value="#{korisnik.username}"
+                             id="username"
+                             validator="#{korisnik.proveraUsername}"   
+                             validatorMessage="Korisnicko ime mora biti jedinstveno. Molimo Vas pokusajte ponovo!"
+                             required="true"
+                             requiredMessage="Korisničko ime je obavezno polje. Molimo Vas da unesete svoje korisničko ime!">                   
+                </p:inputText>
+   
+                #{por.password}
+                <p:password value="#{korisnik.password}"
+                               id="password"
+                               required="true"
+                               requiredMessage="Unesite šifru."
+                             validatorMessage="Lozinka mora imati između 6 i 12 karaktera, i to bar jedno veliko slovo, bar 3 mala, bar jedan broj i bar jedan specijalni karakter.">       
+                    <f:validateRegex pattern="(?=.*[A-Z]+)(?=.*[a-z]{3,})(?=.*\d+)(?=.*\W+)(^.{6,12}$)" />                    
+                </p:password>
+                   
+                #{por.potvrdaPassword}
+                <p:password value="#{korisnik.potvrdaPassword}"
+                               id="password2"
+                               required="true"
+                               requiredMessage="Morate potvrditi sifru." /> 
+            
+                #{por.grad}
+                <p:inputText value="#{korisnik.grad}" />
+                #{por.opstina}
+                <p:inputText value="#{korisnik.opstina}" />
+                #{por.adresa}
+                <p:inputText value="#{korisnik.adresa}" />               
+                
+                #{por.datum} 
+                <p:inputText value="#{korisnik.datumRodjenja}"
+                             converterMessage="Morate uneti datum u formatu dd-mm-gggg!"
+                             required="true"
+                             requiredMessage="Molimo Vas da unesete datum rođenja."
+                             id="datum">
+                             
+                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                </p:inputText>
+               
+                #{por.telefon}
+                <p:inputText value="#{korisnik.telefon}"
+                             required="true"
+                             requiredMessage="Molimo Vas da unesete kontakt telefon."
+                             id="telefon"/>
+                
+                #{por.zaposlenje}
+                <p:selectOneMenu value="#{korisnik.zaposlenje}" >
+                    <f:selectItems value="#{korisnik.zaposlenjeItems}" />
+                </p:selectOneMenu>
+                
+                #{por.mail}
+                <p:inputText value="#{korisnik.mail}" />
+                
+                <o:validateEqual components="password password2" 
+                                 message="Lozinke se ne poklapaju!" showMessageFor="password2" />                        
+            </h:panelGrid>
+
+          
+            <br/><br/><br/>
+            <p:commandButton value="#{por.dugmeReg}" action="#{korisnik.regKorisnika()}"
+                             ajax="true" update="formaRegistracija">
+              
+            </p:commandButton>
+            <br/><br/>
+            <div style="color: red">
+              <h:message for="ime"/>
+              <h:message for="prezime" />
+              <h:message for="username" />
+              <h:message for="password" />
+              <h:message for="password2" />
+              <h:message for="datum" />
+              <h:message for="telefon" />
+            </div>
+             
+
+</h:form>
+            
+            
+        </ui:define>
+      </ui:composition>
+    </h:body>
+</html>
+

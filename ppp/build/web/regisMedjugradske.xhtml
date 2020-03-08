@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="regisTemplate.xhtml">
+        <ui:define name="content">
+           
+          
+        <h:form id="forma">
+        
+        <p:dataTable id="tableStateDT" var="lin" value="#{regisMedj.medjugradske}" widgetVar="medjugradskeTable" multiViewState="true"
+                 rows="20" paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="5,10,15"
+                 rowKey="#{lin.datumPolaska}-#{lin.vremePolaska}"
+                 selectionMode="single" selection="#{regisMedj.selectedMedjugradska}"
+                 emptyMessage="Nema linija koje odgovaraju zadatim kriterijumima." 
+                 filteredValue="#{regisMedj.filteredMedjugradske}">
+ 
+        <f:facet name="header">
+            <p:outputPanel>
+                <h:outputText value="Unesite naziv autobuskog stajališta:" />
+                <p:inputText id="globalFilter" style="width:150px" value="#{regisMedj.stanicaZaPretragu}" />
+                <p:commandButton value="Potvrdi" id="potvrdiButton" ajax="true">
+                    <f:ajax event="click" render="forma" execute="potvrdiButton" />
+                </p:commandButton>
+            </p:outputPanel>
+        </f:facet>
+ 
+        <p:ajax event="rowSelect" update=":forma:carDetail" oncomplete="PF('carDialog').show()" /> 
+      
+ 
+        <p:column headerText="Prevoznik" filterBy="#{lin.nazivPrevoznika}" filterMatchMode="contains">
+            <h:outputText value="#{lin.nazivPrevoznika}" />
+        </p:column>
+        
+        <p:column headerText="Mesto polaska" filterBy="#{lin.mestoPolaska}" filterMatchMode="contains">
+            <h:outputText value="#{lin.mestoPolaska}" />
+        </p:column>
+        
+        <p:column headerText="Mesto dolaska" filterBy="#{lin.mestoDolaska}" filterMatchMode="contains">
+            <h:outputText value="#{lin.mestoDolaska}" />
+        </p:column>
+        <p:column headerText="Datum polaska" filterBy="#{lin.datumPolaska}" filterMatchMode="contains">
+            <h:outputText value="#{lin.datumPolaska}" />
+        </p:column>
+        <p:column headerText="Vreme polaska" filterBy="#{lin.vremePolaska}" filterMatchMode="contains">
+            <h:outputText value="#{lin.vremePolaska}" />
+        </p:column>
+        <p:column headerText="Međustanice" filterBy="#{lin.stanice}" filterMatchMode="contains">
+            <h:outputText value="#{lin.stanice}" />
+        </p:column>
+ 
+    </p:dataTable>
+ 
+    <p:dialog header="Detalji linije:" widgetVar="carDialog" modal="true" 
+              showEffect="fade" hideEffect="fade" resizable="false"
+              height="500" width="700">
+        <p:outputPanel id="carDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty regisMedj.selectedMedjugradska}" columnClasses="label,value">
+                      
+               
+                <h:outputText value="Vozači:" />
+                <h:outputText value="#{regisMedj.selectedMedjugradska.vozaci}" />
+
+                <h:outputText value="Marka autobusa:" />               
+                <h:outputText value="#{regisMedj.selectedMedjugradska.autobusMarka}" />
+                <h:outputText value="Model:" />
+                <h:outputText value="#{regisMedj.selectedMedjugradska.autobusModel}" />
+                <h:outputText value="Broj sedišta:"/>
+                <h:outputText value="#{regisMedj.selectedMedjugradska.autobusBrojSedista}" />
+                
+                <f:facet name="header" >
+                <p:galleria value="#{regisMedj.images}" var="image" panelWidth="600" panelHeight="200"
+                            showCaption="false" effectSpeed="1000" 
+                            autoPlay="false" effect="slide"
+                            >
+                    <p:graphicImage url="/#{image.nazivSlike}" height="200" />
+                </p:galleria>
+                </f:facet>
+                
+                <f:facet name="footer">
+                    <p:inputText value="#{regisMedj.brojKarata}" placeholder="Uneti broj karata" 
+                                 id="msg"/>
+                    <p:commandButton value="Rezervišite karte" id="button"> 
+                        <f:ajax render="carDetail" event="click" execute="button"
+                                listener="#{regisMedj.showGrowl()}"
+                        />
+                    </p:commandButton>
+                    <br/>
+                    <p:growl id="growl" showDetail="true" sticky="true"/>  
+                    
+                </f:facet>
+             
+            </p:panelGrid>
+        </p:outputPanel>
+    </p:dialog>
+</h:form>
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="gostTemplate.xhtml">
+        <ui:define name="content">
+            
+           
+            <br/><br/><br/>
+            
+            <h:form>
+                    <p:dataTable var="lin"
+                             value="#{gost.popuniNajskorije()}">
+                    
+                    <p:column headerText="Prevoznik">
+                        <h:outputText value="#{lin.nazivPrevoznika}" />
+                    </p:column>
+                    
+                    <p:column headerText="Datum polaska">
+                        <h:outputText value="#{lin.datumPolaska}" />
+                    </p:column>
+                    
+                     <p:column headerText="Vreme polaska">
+                         <h:outputText value="#{lin.vremePolaska}" />
+                    </p:column>
+                        
+                        <p:column headerText="Stanice" >
+                            <h:outputText value="#{lin.stanice}" />
+                        </p:column>
+                    
+                </p:dataTable>
+            </h:form>
+            
+            
+            <br/><br/>
+         
+        </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
